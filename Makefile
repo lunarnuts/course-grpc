@@ -1,18 +1,17 @@
 PROTOC_VERSION=3.17.3
 PROTOC_ARCH=linux-x86_64
 PROTOC_DIR=https://github.com/protocolbuffers/protobuf/releases/download
-BINDIR=~/bin
+BINDIR=/bin
 TMPDIR=/tmp/protoc
 
 proto-gen:
-	echo $(PATH)
-	~/bin/protoc --proto_path=./common/proto \
+	protoc --proto_path=./common/proto \
 --go_opt=paths=source_relative \
 --go-grpc_opt=paths=source_relative \
 --go_out=common/transport \
 --go-grpc_out=common/transport \
 messages.proto
-
+##protoc --go_out=common/transport --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative common/proto/messages.proto
 download-protoc:
 	curl -LO $(PROTOC_DIR)/v$(PROTOC_VERSION)/protoc-$(PROTOC_VERSION)-$(PROTOC_ARCH).zip
 

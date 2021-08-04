@@ -14,86 +14,172 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// UserSearcherClient is the client API for UserSearcher service.
+// UserRegisterClient is the client API for UserRegister service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type UserSearcherClient interface {
-	Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*SearchResponse, error)
+type UserRegisterClient interface {
+	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 }
 
-type userSearcherClient struct {
+type userRegisterClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewUserSearcherClient(cc grpc.ClientConnInterface) UserSearcherClient {
-	return &userSearcherClient{cc}
+func NewUserRegisterClient(cc grpc.ClientConnInterface) UserRegisterClient {
+	return &userRegisterClient{cc}
 }
 
-func (c *userSearcherClient) Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*SearchResponse, error) {
-	out := new(SearchResponse)
-	err := c.cc.Invoke(ctx, "/UserSearcher/Search", in, out, opts...)
+func (c *userRegisterClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
+	out := new(RegisterResponse)
+	err := c.cc.Invoke(ctx, "/UserRegister/Register", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// UserSearcherServer is the server API for UserSearcher service.
-// All implementations must embed UnimplementedUserSearcherServer
+// UserRegisterServer is the server API for UserRegister service.
+// All implementations must embed UnimplementedUserRegisterServer
 // for forward compatibility
-type UserSearcherServer interface {
-	Search(context.Context, *SearchRequest) (*SearchResponse, error)
-	mustEmbedUnimplementedUserSearcherServer()
+type UserRegisterServer interface {
+	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
+	mustEmbedUnimplementedUserRegisterServer()
 }
 
-// UnimplementedUserSearcherServer must be embedded to have forward compatible implementations.
-type UnimplementedUserSearcherServer struct {
+// UnimplementedUserRegisterServer must be embedded to have forward compatible implementations.
+type UnimplementedUserRegisterServer struct {
 }
 
-func (UnimplementedUserSearcherServer) Search(context.Context, *SearchRequest) (*SearchResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Search not implemented")
+func (UnimplementedUserRegisterServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
-func (UnimplementedUserSearcherServer) mustEmbedUnimplementedUserSearcherServer() {}
+func (UnimplementedUserRegisterServer) mustEmbedUnimplementedUserRegisterServer() {}
 
-// UnsafeUserSearcherServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to UserSearcherServer will
+// UnsafeUserRegisterServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UserRegisterServer will
 // result in compilation errors.
-type UnsafeUserSearcherServer interface {
-	mustEmbedUnimplementedUserSearcherServer()
+type UnsafeUserRegisterServer interface {
+	mustEmbedUnimplementedUserRegisterServer()
 }
 
-func RegisterUserSearcherServer(s grpc.ServiceRegistrar, srv UserSearcherServer) {
-	s.RegisterService(&UserSearcher_ServiceDesc, srv)
+func RegisterUserRegisterServer(s grpc.ServiceRegistrar, srv UserRegisterServer) {
+	s.RegisterService(&UserRegister_ServiceDesc, srv)
 }
 
-func _UserSearcher_Search_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SearchRequest)
+func _UserRegister_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserSearcherServer).Search(ctx, in)
+		return srv.(UserRegisterServer).Register(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/UserSearcher/Search",
+		FullMethod: "/UserRegister/Register",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserSearcherServer).Search(ctx, req.(*SearchRequest))
+		return srv.(UserRegisterServer).Register(ctx, req.(*RegisterRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// UserSearcher_ServiceDesc is the grpc.ServiceDesc for UserSearcher service.
+// UserRegister_ServiceDesc is the grpc.ServiceDesc for UserRegister service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var UserSearcher_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "UserSearcher",
-	HandlerType: (*UserSearcherServer)(nil),
+var UserRegister_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "UserRegister",
+	HandlerType: (*UserRegisterServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Search",
-			Handler:    _UserSearcher_Search_Handler,
+			MethodName: "Register",
+			Handler:    _UserRegister_Register_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "messages.proto",
+}
+
+// UserListClient is the client API for UserList service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type UserListClient interface {
+	List(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*ListResponse, error)
+}
+
+type userListClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewUserListClient(cc grpc.ClientConnInterface) UserListClient {
+	return &userListClient{cc}
+}
+
+func (c *userListClient) List(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*ListResponse, error) {
+	out := new(ListResponse)
+	err := c.cc.Invoke(ctx, "/UserList/List", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// UserListServer is the server API for UserList service.
+// All implementations must embed UnimplementedUserListServer
+// for forward compatibility
+type UserListServer interface {
+	List(context.Context, *EmptyRequest) (*ListResponse, error)
+	mustEmbedUnimplementedUserListServer()
+}
+
+// UnimplementedUserListServer must be embedded to have forward compatible implementations.
+type UnimplementedUserListServer struct {
+}
+
+func (UnimplementedUserListServer) List(context.Context, *EmptyRequest) (*ListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
+}
+func (UnimplementedUserListServer) mustEmbedUnimplementedUserListServer() {}
+
+// UnsafeUserListServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UserListServer will
+// result in compilation errors.
+type UnsafeUserListServer interface {
+	mustEmbedUnimplementedUserListServer()
+}
+
+func RegisterUserListServer(s grpc.ServiceRegistrar, srv UserListServer) {
+	s.RegisterService(&UserList_ServiceDesc, srv)
+}
+
+func _UserList_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmptyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserListServer).List(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/UserList/List",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserListServer).List(ctx, req.(*EmptyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// UserList_ServiceDesc is the grpc.ServiceDesc for UserList service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var UserList_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "UserList",
+	HandlerType: (*UserListServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "List",
+			Handler:    _UserList_List_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

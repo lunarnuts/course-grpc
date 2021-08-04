@@ -1,22 +1,29 @@
 syntax = "proto3";
-option go_package = "github.com/wshaman/course-grpc/common/transport";
-message SearchRequest {
-  string phone_part = 1;
-  optional int32 limit = 2;
-  optional int32 offset = 3;
+option go_package = "github.com/lunarnuts/course-grpc/common/transport";
+
+message EmptyRequest { }
+
+message RegisterRequest {
+  string name = 1;
 }
 
-message SearchResponse {
+message RegisterResponse {
+  int64 result = 1;
+}
+
+message ListResponse {
   repeated Person result = 1;
 }
 
 message Person {
   int64 id = 1;
   string name = 2;
-  string phone = 3;
 }
 
-service UserSearcher {
-  rpc Search (SearchRequest)  returns (SearchResponse);
-//  rpc SearchStream (SearchRequest)  returns (stream SearchResponse);
+service UserRegister {
+  rpc Register (RegisterRequest)  returns (RegisterResponse);
+}
+
+service UserList {
+  rpc List (EmptyRequest) returns (ListResponse);
 }
