@@ -3,15 +3,15 @@ option go_package = "github.com/lunarnuts/course-grpc/common/transport";
 
 message EmptyRequest { }
 
-message RegisterRequest {
+message UserRegisterRequest {
   string name = 1;
 }
 
-message RegisterResponse {
+message UserRegisterResponse {
   int64 result = 1;
 }
 
-message ListResponse {
+message UsersListResponse {
   repeated Person result = 1;
 }
 
@@ -21,9 +21,6 @@ message Person {
 }
 
 service UserRegister {
-  rpc Register (RegisterRequest)  returns (RegisterResponse);
-}
-
-service UserList {
-  rpc List (EmptyRequest) returns (ListResponse);
+  rpc UserRegister (UserRegisterRequest)  returns (UserRegisterResponse);
+  rpc UsersList (EmptyRequest) returns (UsersListResponse);
 }
