@@ -15,8 +15,7 @@ import (
 )
 
 const (
-	address             = "localhost:50051"
-	defaultUserRegister = "Constantine Phelps"
+	address = "localhost:50051"
 )
 
 func main() {
